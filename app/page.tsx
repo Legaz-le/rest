@@ -8,9 +8,10 @@ export default async function Page({
   searchParams: Promise<{ region?: string; search?: string }>;
 }) {
   const { region = "", search = "" } = await searchParams;
-
+  const baseUrl = process.env.BASE_URL || 'http://localhost:3000';
+  
   const res = await fetch(
-    `http://localhost:3000/api/countries?region=${region}&search=${search}`,
+    `${baseUrl}/api/countries?region=${region}&search=${search}`,
     { next: { revalidate: 60 } } // or `cache: 'no-store'` if needed
   );
   const data = await res.json();
